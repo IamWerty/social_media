@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="profile">
+        <h2>Профіль</h2>
+        <div class="profile-info">
+            <h2>{{ user.username }}'s Profile</h2>
+            <p>Nickname: {{ user.nickname }}</p>
+            <p>Followers: {{ user.followers.count }}</p>
+            <p>Friends: {{ user.friends.count }}</p>
+            <h3>Read Books</h3>
+            <ul>
+                {% for book in user.read_books.all %}
+                    <li>{{ book.title }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Subscribed Channels</h3>
+            <ul>
+                {% for channel in user.subscribed_channels.all %}
+                    <li>{{ channel.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-exit">Вийти</button>
+        </form>
+{% endblock %}
