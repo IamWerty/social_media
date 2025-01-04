@@ -12,5 +12,5 @@ class RedirectAuthenticatedUserMixin(AccessMixin):
     """Міксин для перенаправлення залогінених користувачів."""
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('profile', request.user.username)
+            return redirect('profile')
         return super().dispatch(request, *args, **kwargs)

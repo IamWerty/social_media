@@ -1,9 +1,11 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
 {% block content %}
-    <h2>Register</h2>
-    <form method="post">
+    <h2>Реєстрація</h2>
+    <form method="post" class="form-register">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+        <button type="submit" class="btn-primary">Зареєструватися</button>
     </form>
+    <a href="{% url 'login' %}" class="link-secondary">Увійти</a>
 {% endblock %}

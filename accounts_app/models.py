@@ -13,4 +13,4 @@ class CustomUser(AbstractUser):
     user_permissions = models.ManyToManyField('auth.Permission', related_name='customuser_user_permissions')
 
     def get_absolute_url(self):
-        return reverse('profile', kwargs={'username': self.username})
+        return reverse('profile')
