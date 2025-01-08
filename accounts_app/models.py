@@ -5,8 +5,9 @@ from django.urls import reverse
 
 class CustomUser(AbstractUser):
     nickname = models.CharField(max_length=50, blank=True, null=True)
-    friends = models.ManyToManyField('self', blank=True, symmetrical=True)
-    followers = models.ManyToManyField('self', blank=True, symmetrical=False, related_name='user_followers')
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
+    friends = models.ManyToManyField('self', symmetrical=True, related_name='friend_with', blank=True)
+    follows = models.ManyToManyField('self', blank=True, symmetrical=False, related_name='user_follows')
     read_works = models.ManyToManyField('Library_app.Book', blank=True, related_name='read_by_users')
     channels = models.ManyToManyField('Library_app.Channel', blank=True, related_name='subscribed_users')
     is_private = models.BooleanField(default=False)
@@ -20,6 +21,7 @@ class CustomUser(AbstractUser):
     def delete(self, *args, **kwargs):
         self.friends.clear()
         self.followers.clear()
+        self.follows.clear()
         self.read_works.clear()
         self.channels.clear()
 

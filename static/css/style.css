@@ -1,6 +1,402 @@
 body {
+    font-family: 'Georgia', serif;
+    background-color: #f7f3eb;
     margin: 0;
-    font-family: 'Roboto', Arial, sans-serif;
-    background-color: #4780ba;
-    color: #6c757d;
+    padding: 0;
+    color: #6b4f4f;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.875rem;
+}
+
+p {
+    color: #6b4f4f;
+}
+
+.container {
+    background: #f7f3eb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 25%;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.container h2 {
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-login, .form-register {
+    gap: 15px;
+}
+
+input[type="text"], input[type="password"], input[type="email"], select, textarea {
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+    background-color: #f7f3eb;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button.btn-primary {
+    padding: 10px 15px;
+    background-color: #333;
+    color: #f3f3f3ea;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-primary:hover {
+    background-color: #1f1f1f;
+}
+
+a.link-secondary {
+    display: block;
+    margin-top: 15px;
+    color: #555555;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+a.link-secondary:hover {
+    color: #1f1f1f;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    button.btn-primary {
+        font-size: 14px;
+    }
+
+    a.link-secondary {
+        font-size: 12px;
+    }
+}
+
+.settings {
+    max-width: 600px;
+    margin: 20px;
+    background: #f7f3eb;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 25%;
+    border: #ddd 1px solid;
+}
+
+.settings h2 {
+    margin-bottom: 20px;
+}
+
+.settings form {
+    margin-bottom: 20px;
+}
+
+.settings label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.settings input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.settings button {
+    display: block;
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.settings button:hover {
+    background-color: #0056b3;
+}
+
+.settings .btn-exit {
+    background-color: #dc3545;
+}
+
+.settings .btn-exit:hover {
+    background-color: #a71d2a;
+}
+
+/* Стилі для профілю (profile.html) */
+.profile {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+    margin-top: 20px;
+}
+
+.profile h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-info h3 {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.profile-info p {
+    font-size: 16px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.profile-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile-info ul li {
+    background: #f8f8f8;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Стилі для повідомлення про приватний профіль */
+.profile p {
+    font-size: 18px;
+    color: #333;
+    background-color: #f3f3f3;
+    border: 1px solid #f3f3f3ea;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 600px;
+    margin: 20px;
+}
+.PrivateProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    gap: 20px;
+}
+
+.PrivateProfile p {
+    font-size: 2rem;
+    text-decoration: underline;
+    color: #721c24;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .settings, .profile {
+        margin: 10px;
+        padding: 15px;
+}
+
+    .settings button, .settings .btn-exit {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .profile-info p, .profile-info ul li {
+        font-size: 14px;
+        }
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    position: relative;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 15px;
+    display: block;
+    transition: background 0.3s;
+    font-size: 1.125rem;
+}
+
+.nav-menu a:hover {
+    background-color: #555;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.dropdown-menu li {
+    border-bottom: 1px solid #555;
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a form{
+    padding: 10px 15px;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.dropdown-menu a:hover form:hover {
+    background-color: #555;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        position: static;
+        width: 100%;
+    }
+}
+
+.messages {
+    list-style-type: none;
+    margin: 20px;
+    padding: 0;
+    max-width: 600px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.messages li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    color: #333;
+}
+
+.messages li:last-child {
+    border-bottom: none;
+}
+
+.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.messages li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+@media (max-width: 768px) {
+    .messages {
+        margin: 10px;
+        max-width: 100%;
+    }
 }

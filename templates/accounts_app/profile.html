@@ -1,18 +1,13 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
     {% if user.is_private and request.user.id != user.id %}
-        <p>Цей профіль приватний.</p>
+        <div class='PrivateProfile'>
+            <img src="{% static 'photos/Private_profile.png' %}" width="250" height="240">
+            <p>Цей профіль приватний.</p>
+        </div>
     {% else %}
         <div class="profile">
-            <h2>Профіль</h2>
             <div class="profile-info">
                 <h3>{{ user.username }}</h3>
                 <p>Nickname: {{ user.nickname }}</p>
@@ -36,23 +31,17 @@
                         <li>Канали відсутні.</li>
                     {% endfor %}
                 </ul>
+                {% if request.user.is_authenticated and request.user.id != user.id %}
+                    <form method="post" action="{% url 'user_profile' user.username %}">
+                        {% csrf_token %}
+                        {% if is_following %}
+                            <button type="submit" class="btn btn-primary">Відписатися</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary">Підписатися</button>
+                        {% endif %}
+                    </form>
+                {% endif %}
             </div>
-
-            {% if request.user.id == user.id %}
-                <form method="post">
-                    {% csrf_token %}
-                    <label>
-                        <input type="checkbox" name="is_private" {% if user.is_private %}checked{% endif %}>
-                        Приватний профіль
-                    </label>
-                    <button type="submit">Зберегти</button>
-                </form>
-
-                <form action="{% url 'logout' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn-exit">Вийти</button>
-                </form>
-            {% endif %}
         </div>
     {% endif %}
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="settings">
+        <h2>Налаштування профілю</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label>
+                <input type="checkbox" name="is_private" {% if user.is_private %}checked{% endif %}>
+                Приватний профіль
+            </label>
+            <button type="submit">Зберегти</button>
+        </form>
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-exit">Вийти</button>
+        </form>
+    </div>
+{% endblock %}

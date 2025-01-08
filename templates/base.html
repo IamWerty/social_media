@@ -1,13 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'photos/favpic.png' %}" type="image/x-icon">
+    <title>OnLib</title>
 </head>
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="{% static 'photos/headerPhoto.png' %}" width="70" height="70">
+                <h2>OnLib</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#">Головна</a></li>
+                <li class="dropdown">
+                    <a href="#">Категорії</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Проза</a></li>
+                        <li><a href="#">Поезія</a></li>
+                        <li><a href="#">Есе</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Профіль</a>
+                    <ul class="dropdown-menu">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'user_profile' user.username %}">Мій акаунт</a></li>
+                            <li><a href="{% url 'user_settings' %}">Налаштування</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Увійти</a></li>
+                            <li><a href="{% url 'register' %}">Реєстрація</a></li>
+                        {% endif %}
+                    </ul>
+                </li>                
+                <li><a href="#">Контакти</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {% block content %}
 
     {% endblock %}
+    <footer>
+        &copy; 2025 Соціальна мережа для письменників. Всі права захищені.
+    </footer>
 </body>
 </html>
