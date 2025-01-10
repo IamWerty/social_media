@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
     <link rel="icon" href="{% static 'photos/favpic.png' %}" type="image/x-icon">
     <title>OnLib</title>
 </head>
@@ -20,7 +22,7 @@
                 <li class="dropdown">
                     <a href="#">Категорії</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Проза</a></li>
+                        <li><a href="{% url 'book_list' %}">Книги</a></li>
                         <li><a href="#">Поезія</a></li>
                         <li><a href="#">Есе</a></li>
                     </ul>

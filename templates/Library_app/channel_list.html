@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Channels</h1>
+  <ul>
+    {% for channel in channels %}
+      <li><a href="{% url 'channel_detail' channel.id %}">{{ channel.name }}</a></li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'channel_create' %}">Create a new channel</a>
+{% endblock %}

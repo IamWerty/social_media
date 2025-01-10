@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from accounts_app.models import CustomUser
+from ckeditor.fields import RichTextField
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
@@ -13,23 +14,58 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('book_detail', kwargs={'pk': self.pk})
+
+class BookVote(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='votes')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    value = models.IntegerField()  # 1 for upvote, -1 for downvote
+
+    class Meta:
+        unique_together = ('book', 'user')
+
 class BookComment(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='book_comments')
     content = models.TextField()
-    rates = models.FloatField(default=0.0)
+    rates = models.FloatField(default=0)
     date_upload = models.DateTimeField(auto_now_add=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
         return f"Comment by {self.author} on {self.book}"
+    
+    def get_absolute_url(self):
+        return reverse('book_detail', kwargs={'pk': self.book.pk})
+
+class BookCommentVote(models.Model):
+    comment = models.ForeignKey(BookComment, on_delete=models.CASCADE, related_name='votes')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    value = models.IntegerField()
+
+    class Meta:
+        unique_together = ('comment', 'user')
 
 class Chapter(models.Model):
+    title = models.CharField(max_length=200)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='chapters')
-    content = models.TextField()
+    content = RichTextField()
     note = models.TextField(blank=True, null=True)
+    rates = models.IntegerField(default=0)
 
     def __str__(self):
         return f"Chapter of {self.book.title}"
+    
+    def get_absolute_url(self):
+        return reverse('chapter_detail', kwargs={'book_id': self.book.id, 'pk': self.pk})
+    
+class ChapterVote(models.Model):
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='votes')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    value = models.IntegerField()
+
+    class Meta:
+        unique_together = ('chapter', 'user')
 
 class ChapterComment(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='chapter_comments')
