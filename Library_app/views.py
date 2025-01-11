@@ -26,6 +26,18 @@ class BookDetailView(DetailView):
     template_name = 'Library_app/book_detail.html'
     context_object_name = 'book'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_authenticated:
+            # Якщо користувач має канал, додаємо його, інакше повертаємо порожній список
+            context['owned_channel'] = getattr(user, 'owned_channel', None)
+            context['admin_channels'] = user.admin_channels.all()  # Канали, де користувач є адміністратором
+        else:
+            context['owned_channel'] = None
+            context['admin_channels'] = []
+        return context
+
 class BookCommentCreateView(CreateView):
     model = BookComment
     fields = ['content', 'rates']
@@ -87,6 +99,7 @@ class ChannelCreateView(CreateView):
     template_name = 'Library_app/channel_form.html'
 
     def form_valid(self, form):
+        form.instance.owner = self.request.user
         channel = form.save()
         channel.admins.add(self.request.user)
         channel.members.add(self.request.user)
@@ -105,53 +118,69 @@ class ChannelDetailView(DetailView):
         context['all_users'] = CustomUser.objects.all()
         return context
 
-class AddAdminView(View):
+class ManageAdminView(View):
     def post(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        if request.user in channel.admins.all():
-            user_id = request.POST.get('user_id')
-            user = get_object_or_404(CustomUser, pk=user_id)
-            channel.admins.add(user)
-            messages.success(request, 'Admin added successfully')
-        else:
-            messages.error(request, 'You do not have permission to add admins')
+        username = request.POST.get('username')
+        action = request.POST.get('action')
+
+        if not request.user in channel.admins.all():
+            messages.error(request, 'You do not have permission to manage admins.')
+            return redirect('channel_detail', pk=pk)
+
+        user = CustomUser.objects.filter(username=username).first()
+        if not user:
+            messages.error(request, 'User not found.')
+            return redirect('channel_detail', pk=pk)
+
+        if action == 'add':
+            if user not in channel.admins.all():
+                channel.admins.add(user)
+                messages.success(request, f'User "{username}" added as admin.')
+            else:
+                messages.info(request, f'User "{username}" is already an admin.')
+        elif action == 'remove':
+            if user in channel.admins.all():
+                channel.admins.remove(user)
+                messages.success(request, f'User "{username}" removed from admins.')
+            else:
+                messages.info(request, f'User "{username}" is not an admin.')
+
         return redirect('channel_detail', pk=pk)
 
 class RepostBookView(View):
-    def post(self, request, pk):
-        book = get_object_or_404(Book, pk=pk)
-        channel_id = request.POST.get('channel_id')
-        comment = request.POST.get('comment')
-        channel = get_object_or_404(Channel, pk=channel_id)
+    def post(self, request, book_id):
+        book = get_object_or_404(Book, id=book_id)
+        channel_id = request.POST.get("channel_id")
+        comment = request.POST.get("comment", "").strip()
+        channel = get_object_or_404(Channel, id=channel_id, owner=request.user)
 
-        if request.user in channel.admins.all():
-            Post.objects.create(
-                channel=channel,
-                author=request.user,
-                content=f"Repost: {book.title}\n\nComment: {comment}",
-            )
-            messages.success(request, 'Book reposted successfully')
-        else:
-            messages.error(request, 'You do not have permission to repost to this channel')
-        return redirect('book_detail', pk=pk)
+        # Створення публікації-репосту
+        Post.objects.create(
+            channel=channel,
+            author=request.user,
+            reposted_book=book,
+            comment=comment,
+            content=f"{request.user.username} Reposted {book.title}"
+        )
+        return redirect('channel_detail', pk=channel.id)
 
 class RepostChapterView(View):
-    def post(self, request, pk):
-        chapter = get_object_or_404(Chapter, pk=pk)
-        channel_id = request.POST.get('channel_id')
-        comment = request.POST.get('comment')
-        channel = get_object_or_404(Channel, pk=channel_id)
+    def post(self, request, chapter_id):
+        chapter = get_object_or_404(Chapter, id=chapter_id)
+        channel_id = request.POST.get("channel_id")
+        comment = request.POST.get("comment", "").strip()
+        channel = get_object_or_404(Channel, id=channel_id, owner=request.user)
 
-        if request.user in channel.admins.all():
-            Post.objects.create(
-                channel=channel,
-                author=request.user,
-                content=f"Repost: {chapter.title}\n\nComment: {comment}",
-            )
-            messages.success(request, 'Chapter reposted successfully')
-        else:
-            messages.error(request, 'You do not have permission to repost to this channel')
-        return redirect('chapter_detail', book_id=chapter.book.id, pk=pk)
+        # Створення публікації-репосту
+        Post.objects.create(
+            channel=channel,
+            author=request.user,
+            reposted_chapter=chapter,
+            comment=comment,
+            content=f"{request.user.username} Reposted {chapter.title}"
+        )
+        return redirect('channel_detail', pk=channel.id)
 
 class PostCreateView(CreateView):
     model = Post

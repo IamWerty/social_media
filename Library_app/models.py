@@ -79,18 +79,22 @@ class ChapterComment(models.Model):
 
 class Channel(models.Model):
     name = models.CharField(max_length=255)
-    admins = models.ManyToManyField(CustomUser, related_name='admin_channels')
-    members = models.ManyToManyField(CustomUser, related_name='member_channels')
+    owner = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='owned_channel')
+    admins = models.ManyToManyField(CustomUser, related_name='admin_channels', blank=True)
+    members = models.ManyToManyField(CustomUser, related_name='member_channels', blank=True)
 
     def __str__(self):
         return self.name
 
 class Post(models.Model):
-    channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name='posts')
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='posts')
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name="posts")
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.TextField()
-    date_upload = models.DateTimeField(auto_now_add=True)
-
+    reposted_book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, blank=True, related_name="repost_posts")
+    reposted_chapter = models.ForeignKey(Chapter, on_delete=models.SET_NULL, null=True, blank=True, related_name="repost_posts")
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
         return f"Post by {self.author} in {self.channel}"
 
@@ -98,6 +102,7 @@ class Repost(models.Model):
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name='reposts')
     original_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reposts')
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reposts')
+    comment = models.TextField(blank=True, null=True)  # Коментар для репосту
     date_upload = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

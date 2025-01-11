@@ -2,22 +2,25 @@
 
 {% block content %}
   <h1>{{ channel.name }}</h1>
+  <h3>Owner</h3>
+  <p>{{ channel.owner.username }}</p>
   <h3>Admins</h3>
   <ul>
     {% for admin in channel.admins.all %}
       <li>{{ admin.username }}</li>
     {% endfor %}
   </ul>
-  <h3>Add Admin</h3>
-  <form method="post" action="{% url 'add_admin' channel.id %}">
-      {% csrf_token %}
-      <select name="user_id">
-          {% for user in all_users %}
-              <option value="{{ user.id }}">{{ user.username }}</option>
-          {% endfor %}
-      </select>
-      <button type="submit">Add Admin</button>
-  </form>
+  {% if request.user == channel.owner %}
+    <h3>Manage Admins</h3>
+    <form method="post" action="{% url 'manage_admin' channel.id %}">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required>
+        
+        <button type="submit" name="action" value="add">Add Admin</button>
+        <button type="submit" name="action" value="remove">Remove Admin</button>
+    </form>
+  {% endif %}
   <h3>Members</h3>
   <ul>
     {% for member in channel.members.all %}
@@ -27,7 +30,18 @@
   <h3>Posts</h3>
   <ul>
     {% for post in channel.posts.all %}
-      <li>{{ post.author }}: {{ post.content }}</li>
+        <li>
+            <p>{{ post.content }}</p>
+            {% if post.reposted_book %}
+                <p><a href="{{ post.reposted_book.get_absolute_url }}">{{ post.reposted_book.title }}</a></p>
+            {% elif post.reposted_chapter %}
+                <p><a href="{{ post.reposted_chapter.get_absolute_url }}">{{ post.reposted_chapter.title }}</a></p>
+            {% endif %}
+            {% if post.comment %}
+                <p>Comment: {{ post.comment }}</p>
+            {% endif %}
+            <small>Posted by {{ post.author.username }} on {{ post.created_at }}</small>
+        </li>
     {% endfor %}
   </ul>
   <form method="post" action="{% url 'post_create' channel.id %}">{% csrf_token %}

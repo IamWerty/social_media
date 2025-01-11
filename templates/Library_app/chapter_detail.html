@@ -2,11 +2,23 @@
 
 {% block content %}
     <h1>{{ chapter.title }}</h1>
+    
+    {% if chapter.original_chapter %}
+        <p><strong>Reposted from: </strong>
+            <a href="{{ chapter.original_chapter.get_absolute_url }}">{{ chapter.original_chapter.title }}</a>
+        </p>
+    {% elif chapter.original_book %}
+        <p><strong>Reposted from: </strong>
+            <a href="{{ chapter.original_book.get_absolute_url }}">{{ chapter.original_book.title }}</a>
+        </p>
+    {% endif %}
+    
     {{ chapter.content|safe }}
     <hr>
-        <h2>Note</h2>
-        {{ chapter.note }}
-    </hr>
+    <h2>Note</h2>
+    {{ chapter.note }}
+    <hr>
+    
     {% if request.user.is_authenticated and request.user != book.author %}
         <form method="post" action="{% url 'vote' obj_type='chapter' obj_id=chapter.id %}">
             {% csrf_token %}
@@ -17,21 +29,27 @@
     {% else %}
         <span>{{ chapter.rates }}</span>
     {% endif %}
+    
     <strong><a href="{{ book.get_absolute_url }}">Back to Book</a></strong>
+    
     <h3>Repost Chapter</h3>
     <form method="post" action="{% url 'repost_chapter' chapter.id %}">
         {% csrf_token %}
         <label for="channel">Select Channel:</label>
         <select name="channel_id">
-            {% for channel in user.channels_owned.all %}
-                <option value="{{ channel.id }}">{{ channel.name }}</option>
-            {% endfor %}
+          {% for channel in owned_channels %}
+              <option value="{{ channel.id }}">{{ channel.name }}</option>
+          {% endfor %}
+          {% for channel in admin_channels %}
+              <option value="{{ channel.id }}">{{ channel.name }}</option>
+          {% endfor %}
         </select>
         <label for="comment">Comment:</label>
         <textarea name="comment" id="comment"></textarea>
         <button type="submit">Repost</button>
     </form>
-    
+
+
     <h2>Comments</h2>
     <ul>
         {% for comment in chapter.comments.all %}

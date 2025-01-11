@@ -15,12 +15,12 @@ urlpatterns = [
     path('channels/', views.ChannelListView.as_view(), name='channel_list'),
     path('channels/create/', views.ChannelCreateView.as_view(), name='channel_create'),
     path('channels/<int:pk>/', views.ChannelDetailView.as_view(), name='channel_detail'),
-    path('channels/<int:pk>/add_admin/', views.AddAdminView.as_view(), name='add_admin'),
+    path('channels/<int:pk>/manage_admin/', views.ManageAdminView.as_view(), name='manage_admin'),
     path('channels/<int:pk>/posts/create/', views.PostCreateView.as_view(), name='post_create'),
     path('channels/<int:pk>/repost/', views.RepostCreateView.as_view(), name='repost_create'),
 
     path('vote/<str:obj_type>/<int:obj_id>/', views.VoteView.as_view(), name='vote'),
 
-    path('book/<int:pk>/repost/', views.RepostBookView.as_view(), name='repost_book'),
-    path('chapter/<int:pk>/repost/', views.RepostChapterView.as_view(), name='repost_chapter'),
+    path('repost/book/<int:book_id>/', views.RepostBookView.as_view(), name='repost_book'),
+    path('repost/chapter/<int:chapter_id>/', views.RepostChapterView.as_view(), name='repost_chapter'),
 ]

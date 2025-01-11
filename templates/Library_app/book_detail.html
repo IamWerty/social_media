@@ -53,17 +53,21 @@
   </ul>
   <h3>Repost Book</h3>
   <form method="post" action="{% url 'repost_book' book.id %}">
-    {% csrf_token %}
-    <label for="channel">Select Channel:</label>
-    <select name="channel_id">
-        {% for channel in user.channels_owned.all %}
+      {% csrf_token %}
+      <label for="channel">Select Channel:</label>
+      <select name="channel_id">
+        {% for channel in owned_channels %}
             <option value="{{ channel.id }}">{{ channel.name }}</option>
         {% endfor %}
-    </select>
-    <label for="comment">Comment:</label>
-    <textarea name="comment" id="comment"></textarea>
-    <button type="submit">Repost</button>
+        {% for channel in admin_channels %}
+            <option value="{{ channel.id }}">{{ channel.name }}</option>
+        {% endfor %}
+      </select>
+      <label for="comment">Comment:</label>
+      <textarea name="comment" id="comment"></textarea>
+      <button type="submit">Repost</button>
   </form>
+
 
   <h4>Add a Comment</h4>
   <form method="post" action="{% url 'book_comment_create' book.id %}">
