@@ -102,7 +102,7 @@ class Repost(models.Model):
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name='reposts')
     original_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reposts')
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reposts')
-    comment = models.TextField(blank=True, null=True)  # Коментар для репосту
+    comment = models.TextField(blank=True, null=True)
     date_upload = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

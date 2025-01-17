@@ -29,7 +29,7 @@
   </ul>
   <h3>Posts</h3>
   <ul>
-    {% for post in channel.posts.all %}
+    {% for post in posts %}
         <li>
             <p>{{ post.content }}</p>
             {% if post.reposted_book %}

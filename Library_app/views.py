@@ -30,9 +30,8 @@ class BookDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
         if user.is_authenticated:
-            # Якщо користувач має канал, додаємо його, інакше повертаємо порожній список
             context['owned_channel'] = getattr(user, 'owned_channel', None)
-            context['admin_channels'] = user.admin_channels.all()  # Канали, де користувач є адміністратором
+            context['admin_channels'] = user.admin_channels.all()
         else:
             context['owned_channel'] = None
             context['admin_channels'] = []
@@ -73,6 +72,13 @@ class ChapterDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         book_id = self.kwargs.get('book_id')
         context['book'] = get_object_or_404(Book, id=book_id)
+        user = self.request.user
+        if user.is_authenticated:
+            context['owned_channel'] = getattr(user, 'owned_channel', None)
+            context['admin_channels'] = user.admin_channels.all()
+        else:
+            context['owned_channel'] = None
+            context['admin_channels'] = []
         return context
 
 class ChapterCommentCreateView(CreateView):
@@ -116,6 +122,7 @@ class ChannelDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['all_users'] = CustomUser.objects.all()
+        context['posts'] = self.object.posts.all().order_by('-id')
         return context
 
 class ManageAdminView(View):
@@ -155,7 +162,6 @@ class RepostBookView(View):
         comment = request.POST.get("comment", "").strip()
         channel = get_object_or_404(Channel, id=channel_id, owner=request.user)
 
-        # Створення публікації-репосту
         Post.objects.create(
             channel=channel,
             author=request.user,
@@ -172,7 +178,6 @@ class RepostChapterView(View):
         comment = request.POST.get("comment", "").strip()
         channel = get_object_or_404(Channel, id=channel_id, owner=request.user)
 
-        # Створення публікації-репосту
         Post.objects.create(
             channel=channel,
             author=request.user,

@@ -43,25 +43,20 @@ class UserProfileView(View):
             messages.error(request, "Ви не можете підписатися на себе.")
             return redirect('user_profile', username=username)
 
-        # Перевірка, чи користувач вже підписаний
         if target_user.followers.filter(id=request.user.id).exists():
-            # Видалення підписки
             target_user.followers.remove(request.user)
             request.user.follows.remove(target_user)
             messages.info(request, f"Ви більше не підписані на {target_user.username}.")
 
-            # Видалення з друзів, якщо вони були
             if target_user in request.user.friends.all():
                 request.user.friends.remove(target_user)
                 target_user.friends.remove(request.user)
                 messages.info(request, f"Ви більше не друзі з {target_user.username}.")
         else:
-            # Додавання підписки
             target_user.followers.add(request.user)
             request.user.follows.add(target_user)
             messages.success(request, f"Ви підписалися на {target_user.username}.")
 
-            # Перевірка, чи підписка взаємна (через `followers`)
             if request.user in target_user.followers.all():
                 request.user.friends.add(target_user)
                 target_user.friends.add(request.user)

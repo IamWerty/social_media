@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="ann-container">
+        <h1>Advertisements</h1>
+
+        {% if user.is_superuser %}
+            <a href="{% url 'Announcment_create' %}" class="btn btn-primary">Create New Advertisement</a>
+        {% endif %}
+
+        <ul>
+            {% for ann in anns %}
+                <li>
+                    <h3>{{ ann.title }}</h3>
+                    <p>{{ ann.content|slice:":25" }}
+                        {% if ann.content|length > 25 %}...{% endif %}
+                    </p>
+                    <small>{{ ann.created_at }}</small>
+                    <br>
+                    <a href="{% url 'Announcment_detail' ann.id %}">View Details</a>
+
+                    {% if user.is_superuser %}
+                        <a href="{% url 'Announcment_update' ann.id %}" class="btn btn-secondary">Edit</a>
+                        <a href="{% url 'Announcment_delete' ann.id %}" class="btn btn-danger">Delete</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

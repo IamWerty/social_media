@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="form-container">
+        <h1>
+            {% if view.object %}
+                Edit Advertisement
+            {% else %}
+                Create New Advertisement
+            {% endif %}
+        </h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        <a href="{% url 'Announcment_list' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+{% endblock %}
