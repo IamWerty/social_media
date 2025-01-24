@@ -32,7 +32,7 @@
     
     <strong><a href="{{ book.get_absolute_url }}">Back to Book</a></strong>
     
-    <h3>Repost Chapter({{owned_channels}}, {{admin_channels}})</h3>
+    <h3>Repost Chapter</h3>
     <form method="post" action="{% url 'repost_chapter' chapter.id %}">
         {% csrf_token %}
         <label for="channel">Select Channel:</label>

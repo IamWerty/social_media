@@ -33,6 +33,7 @@
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'user_profile' user.username %}">Мій акаунт</a></li>
                             <li><a href="{% url 'user_settings' %}">Налаштування</a></li>
+                            <li><a href="{% url 'chat_view' %}">Чати</a></li>
                         {% else %}
                             <li><a href="{% url 'login' %}">Увійти</a></li>
                             <li><a href="{% url 'register' %}">Реєстрація</a></li>

@@ -400,3 +400,105 @@ nav {
         max-width: 100%;
     }
 }
+
+.chat-list {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+.chat-list a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #eee;
+}
+.chat-list a:hover {
+    background-color: #f0f0f0;
+}
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.messages {
+    flex: 1;
+    max-height: 25%;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+.message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+.message.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+}
+.message.received {
+    background-color: #fff;
+    align-self: flex-start;
+    border: 1px solid #ccc;
+}
+.message-form {
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+}
+.message-form textarea {
+    flex: 1;
+    resize: none;
+    padding: 10px;
+}
+.message-form button {
+    margin-left: 10px;
+    padding: 10px;
+}
+
+.chat-body {
+    display: flex;
+}
+.message-actions {
+    position: relative;
+    display: inline-block;
+}
+
+.actions-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+}
+
+.actions-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.actions-button:focus + .actions-menu,
+.actions-menu:hover {
+    display: block;
+}
+
+.actions-menu form {
+    margin: 0;
+    padding: 5px;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 14px;
+}

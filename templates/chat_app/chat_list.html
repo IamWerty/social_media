@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="chat-body">
+        <div class="chat-list">
+            {% if user_chats %}
+                {% for chat in user_chats %}
+                    <a href="?chat_id={{ chat.id }}" 
+                    class="chat-item {% if selected_chat and chat.id == selected_chat.id %}active{% endif %}">
+                        Chat with 
+                        {% if chat.user2 == request.user %}
+                            {{ chat.user1.nickname|default:chat.user1.username }}
+                        {% else %}
+                            {{ chat.user2.nickname|default:chat.user2.username }}
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>У вас немає зараз доступних чатів. Знайдіть собі друзів і починайте листування!</p>
+            {% endif %}
+        </div>
+
+    <div class="chat-container">
+        <div class="messages">
+            {% if selected_chat %}
+                {% for message in messages_in_chat %}
+                    <div id="message-{{ message.id }}" class="message {% if message.author == request.user %}sent{% else %}received{% endif %}">
+                        <p>{{ message.context }}</p>
+                        {% if message.reply_to %}
+                            <div class="reply">
+                                <a href="#message-{{ message.reply_to.id }}">Replying to: {{ message.reply_to.context|truncatechars:25 }}</a>
+                            </div>
+                        {% endif %}
+                        <div class="message-actions">
+                            <button class="actions-button">...</button>
+                            <div class="actions-menu">
+                                <form method="post" action="{% url 'reply_to_message' message.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="reply-button">Reply</button>
+                                </form>
+                                {% if message.author == request.user %}
+                                    <form method="post" action="{% url 'delete_message' message.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-button">Delete</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Select a chat to view messages.</p>
+            {% endif %}
+        </div>
+        {% if selected_chat %}
+            <form class="message-form" method="post" action="{% url 'send_message' selected_chat.id %}">
+                {% csrf_token %}
+                {% if request.session.reply_to %}
+                    {% with request.session.reply_to|add:"" as reply_to_message %}
+                        <div class="reply-preview">
+                            Replying to: {{ reply_to_message.context|truncatechars:25 }}
+                            <a href="?cancel_reply=true" class="cancel-reply">Cancel</a>
+                        </div>
+                    {% endwith %}
+                {% endif %}
+                <textarea name="context" placeholder="Enter your message here..." rows="3" required></textarea>
+                <input type="hidden" name="reply_to" value="{{ request.session.reply_to|default:'' }}">
+                <button type="submit">Send</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

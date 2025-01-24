@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="ann-container">
-        <h1>Advertisements</h1>
+        <h1>Announcments</h1>
 
         {% if user.is_superuser %}
             <a href="{% url 'Announcment_create' %}" class="btn btn-primary">Create New Advertisement</a>

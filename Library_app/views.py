@@ -39,7 +39,7 @@ class BookDetailView(DetailView):
 
 class BookCommentCreateView(CreateView):
     model = BookComment
-    fields = ['content', 'rates']
+    fields = ['content']
     template_name = 'Library_app/book_comment_form.html'
 
     def form_valid(self, form):
@@ -83,7 +83,7 @@ class ChapterDetailView(DetailView):
 
 class ChapterCommentCreateView(CreateView):
     model = ChapterComment
-    fields = ['content', 'rates']
+    fields = ['content']
     template_name = 'Library_app/chapter_comment_form.html'
 
     def form_valid(self, form):
