@@ -506,7 +506,7 @@ nav {
 
 
 
-.container-book-list {
+.container-book-list, .channels-container {
     max-width: 75%;
     margin: 20px auto;
     padding: 20px;
@@ -519,12 +519,13 @@ nav {
     justify-content: space-between;
     margin-top: -2.5%;
 }
-.title {
+.title, .channels-title {
     margin: 12px;
     text-align: left;
     color: #333;
+    word-break: break-all;
 }
-.book-list ul {
+.book-list, .book-chapters, .channels-list ul {
     list-style-type: none;
     padding: 0;
 }
@@ -532,8 +533,7 @@ nav {
     margin: 1px;
     color: gray;
 }
-.book-item {
-    margin-top: 24px;
+.book-item, .book-item-chapter, .channel-item {
     display: flex;
     padding: 10px;
     border: 1px;
@@ -542,12 +542,12 @@ nav {
     border-radius: 12px;
     justify-content: space-between;
 }
-.book-link {
+.book-link, .chapter-link, .channel-link {
     text-decoration: none;
     color: #ffffff;
     font-weight: bold;
 }
-.book-link:hover {
+.book-link:hover, .chapter-link:hover, .channel-item:hover, .channel-link:hover {
     text-decoration: underline;
 }
 .create-book {
@@ -555,7 +555,7 @@ nav {
     margin-top: 40px;
     justify-content: center;
 }
-.create-button {
+.create-button, .create-channel-button, .create-channel-button:hover {
     margin: 12px;
     padding: 10px 15px;
     background: #333;
@@ -572,10 +572,6 @@ nav {
     margin: 1px;
 }
 
-
-
-
-
 .book-container {
     width: 95%;
     margin: 20px auto;
@@ -586,11 +582,14 @@ nav {
 }
 .book-title-slice {
     display: flex;
+    align-items: center;
+    margin: 12px;
 }
 
-.book-title {
+.book-title, .comment-content{
     text-align: center;
     color: #2c3e50;
+    margin-left: 12px;
 }
 
 .book-author, .book-content, .book-tags {
@@ -600,17 +599,8 @@ nav {
 
 .book-chapters {
     background: #ecf0f1;
-    padding: 10px;
     border-radius: 5px;
-}
-
-.chapter-link {
-    color: #1f1f1f;
-    text-decoration: none;
-}
-
-.chapter-link:hover {
-    text-decoration: underline;
+    padding: 5pxq;
 }
 
 .vote-form {
@@ -663,4 +653,122 @@ button {
 
 button:hover {
     background: #1f1f1f;
+}
+
+.back-to-book {
+    padding: 10px;
+    border: 1px;
+    background-color: #333;
+    margin: 12px;
+    border-radius: 12px;
+    max-width: 12%;
+}
+.back-to-book a {
+    color: white;
+    text-decoration: none;
+}
+.create-channel {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+.chapter-container {
+    max-width: 80%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Стилі для блоку перепоста */
+.repost-info {
+    background: #eef;
+    padding: 10px;
+    border-left: 5px solid #88c;
+    margin-bottom: 15px;
+}
+
+/* Стилі для коментарів */
+.comment-container {
+    margin-top: 20px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.comments {
+    list-style: none;
+    padding: 0;
+}
+
+.comment-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+/* Стилі для форми додавання коментаря */
+.comment-form-container {
+    margin-top: 20px;
+    background: #eef;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    height: 80px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.comment-form button {
+    background: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background: #333333;
+}
+
+.chapter-content {
+    margin-bottom: 20px;
+    word-break: break-all;
+}
+
+.chapter-note {
+    font-style: italic;
+    padding: 10px;
+    background: #f4f4f4;
+    border-left: 4px solid #88c;
+    margin-bottom: 20px;
+}
+
+.repost-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: #eef;
+    border-radius: 8px;
+}
+
+.chapter-title {
+    margin: 12px;
+    margin-top: -12px;
+    font-size: 2cap;
+    word-break: break-all;
 }

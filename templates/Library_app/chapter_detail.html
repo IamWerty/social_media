@@ -1,76 +1,104 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ chapter.title }}</h1>
-    
-    {% if chapter.original_chapter %}
-        <p><strong>Reposted from: </strong>
-            <a href="{{ chapter.original_chapter.get_absolute_url }}">{{ chapter.original_chapter.title }}</a>
-        </p>
-    {% elif chapter.original_book %}
-        <p><strong>Reposted from: </strong>
-            <a href="{{ chapter.original_book.get_absolute_url }}">{{ chapter.original_book.title }}</a>
-        </p>
-    {% endif %}
-    
-    {{ chapter.content|safe }}
-    <hr>
-    <h2>Note</h2>
-    {{ chapter.note }}
-    <hr>
-    
-    {% if request.user.is_authenticated and request.user != book.author %}
-        <form method="post" action="{% url 'vote' obj_type='chapter' obj_id=chapter.id %}">
-            {% csrf_token %}
-            <button type="submit" name="value" value="1">⬆</button>
-            <span>{{ chapter.rates }}</span>
-            <button type="submit" name="value" value="-1">⬇</button>
-        </form>
-    {% else %}
-        <span>{{ chapter.rates }}</span>
-    {% endif %}
-    
-    <strong><a href="{{ book.get_absolute_url }}">Back to Book</a></strong>
-    
-    <h3>Repost Chapter</h3>
-    <form method="post" action="{% url 'repost_chapter' chapter.id %}">
-        {% csrf_token %}
-        <label for="channel">Select Channel:</label>
-        <select name="channel_id">
-          {% for channel in owned_channels %}
-              <option value="{{ channel.id }}">{{ channel.name }}</option>
-          {% endfor %}
-          {% for channel in admin_channels %}
-              <option value="{{ channel.id }}">{{ channel.name }}</option>
-          {% endfor %}
-        </select>
-        <label for="comment">Comment:</label>
-        <textarea name="comment" id="comment"></textarea>
-        <button type="submit">Repost</button>
-    </form>
+    <div class="chapter-container">
+        <div class="book-title-slice">
+            <div class="vote-container">
+                {% if request.user.is_authenticated and request.user != book.author %}
+                    <form class="vote-form" method="post" action="{% url 'vote' obj_type='chapter' obj_id=chapter.id %}">
+                        {% csrf_token %}
+                        <button type="submit" name="value" value="1">⬆</button>
+                        <span>{{ chapter.rates }}</span>
+                        <button type="submit" name="value" value="-1">⬇</button>
+                    </form>
+                {% else %}
+                    <span>{{ chapter.rates }}</span>
+                {% endif %}
+            </div>
+                <div class="chapter-title">
+                    <h1>{{ chapter.title }}</h1>
+                </div>
+        </div>
 
+            {% if chapter.original_chapter %}
+                <div class="repost-info">
+                    <p><strong>Reposted from: </strong>
+                        <a href="{{ chapter.original_chapter.get_absolute_url }}">{{ chapter.original_chapter.title }}</a>
+                    </p>
+                </div>
+            {% elif chapter.original_book %}
+                <div class="repost-info">
+                    <p><strong>Reposted from: </strong>
+                        <a href="{{ chapter.original_book.get_absolute_url }}">{{ chapter.original_book.title }}</a>
+                    </p>
+                </div>
+            {% endif %}
 
-    <h2>Comments</h2>
-    <ul>
-        {% for comment in chapter.comments.all %}
-            <li>
-                <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
-                <form method="post" action="{% url 'vote' obj_type='comment' obj_id=comment.id %}">
-                    {% csrf_token %}
-                    <span>{{ comment.rates }}</span>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+            <div class="chapter-content">
+                {{ chapter.content|safe }}
+            </div>
+            
+            {% if chapter.note %}
+                <hr>
+                <div class="chapter-note">
+                    <h2>Note</h2>
+                    {{ chapter.note }}
+                </div>
+                <hr>
+            {% endif %}
 
-    <h2>Add a Comment</h2>
-    {% if user.is_authenticated %}
-        <form method="post" action="{% url 'chapter_comment_create' book_id=chapter.book.id pk=chapter.id %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-secondary">Submit Comment</button>
-        </form>
-    {% else %}
-        <p>You must <a href="{% url 'login' %}">log in</a> or <a href="{% url 'signup' %}">sign up</a> to add a comment.</p>
-    {% endif %}
+            <div class="back-to-book">
+                <strong><a href="{{ book.get_absolute_url }}">Back to Book</a></strong>
+            </div>
+
+            {% if owned_channels or admin_channels %}
+                <div class="repost-container">
+                    <h3>Repost Chapter</h3>
+                    <form method="post" action="{% url 'repost_chapter' chapter.id %}">
+                        {% csrf_token %}
+                        <label for="channel">Select Channel:</label>
+                        <select name="channel_id">
+                        {% for channel in owned_channels %}
+                            <option value="{{ channel.id }}">{{ channel.name }}</option>
+                        {% endfor %}
+                        {% for channel in admin_channels %}
+                            <option value="{{ channel.id }}">{{ channel.name }}</option>
+                        {% endfor %}
+                        </select>
+                        <label for="comment">Comment:</label>
+                        <textarea name="comment" id="comment"></textarea>
+                        <button type="submit">Repost</button>
+                    </form>
+                </div>
+            {% endif %}
+
+            <div class="comment-container">
+                <h2>Comments</h2>
+                <ul class="comments">
+                    {% for comment in chapter.comments.all %}
+                        <li class="comment-item">
+                            <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
+                            <form class="vote-form" method="post" action="{% url 'vote' obj_type='comment' obj_id=comment.id %}">
+                                {% csrf_token %}
+                                <span>{{ comment.rates }}</span>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="comment-form-container">
+                <h2>Add a Comment</h2>
+                {% if user.is_authenticated %}
+                    <form class="comment-form" method="post" action="{% url 'chapter_comment_create' book_id=chapter.book.id pk=chapter.id %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-secondary">Submit Comment</button>
+                    </form>
+                {% else %}
+                    <p>You must <a href="{% url 'login' %}">log in</a> or <a href="{% url 'signup' %}">sign up</a> to add a comment.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -23,9 +23,15 @@
     <div class="book-chapters">
       <h3>Chapters</h3>
       <ul>
-        {% for chapter in book.chapters.all %}
-          <li><a href="{{ chapter.id }}" class="chapter-link">{{ chapter.title }}</a></li>
-        {% endfor %}
+          {% for chapter in book.chapters.all %}
+            <div class="book-item-chapter">
+              <li><a href="{{ chapter.id }}" class="chapter-link">{{ chapter.title }}</a>
+              <small><p>{{ chapter.content|safe|slice:":50" }}
+                {% if chapter.content|safe|length > 50 %}...{% endif %}
+              </p></small>
+              </li>
+            </div>
+          {% endfor %}
       </ul>
     </div>
 
@@ -85,7 +91,9 @@
                       <span class="rating">{{ comment.rates }}</span>
                   {% endif %}
               </form>
-              <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
+              <div class="comment-content">
+                <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
+              </div>
             </div>
           </li>
         {% endfor %}
