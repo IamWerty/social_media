@@ -87,24 +87,6 @@ a.link-secondary:hover {
     gap: 15px;
 }
 
-@media (max-width: 600px) {
-    .container {
-        padding: 15px;
-    }
-
-    h2 {
-        font-size: 20px;
-    }
-
-    button.btn-primary {
-        font-size: 14px;
-    }
-
-    a.link-secondary {
-        font-size: 12px;
-    }
-}
-
 .settings {
     max-width: 600px;
     margin: 20px;
@@ -228,23 +210,6 @@ a.link-secondary:hover {
     color: #721c24;
 }
 
-/* Адаптивність */
-@media (max-width: 768px) {
-    .settings, .profile {
-        margin: 10px;
-        padding: 15px;
-}
-
-    .settings button, .settings .btn-exit {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .profile-info p, .profile-info ul li {
-        font-size: 14px;
-        }
-}
-
 header {
     background-color: #333;
     color: #fff;
@@ -328,31 +293,6 @@ nav {
     display: block;
 }
 
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .nav-menu {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .nav-menu li {
-        width: 100%;
-    }
-
-    .nav-menu a {
-        width: 100%;
-    }
-
-    .dropdown-menu {
-        position: static;
-        width: 100%;
-    }
-}
-
 .messages {
     list-style-type: none;
     margin: 20px;
@@ -398,6 +338,65 @@ nav {
     .messages {
         margin: 10px;
         max-width: 100%;
+    }
+    .create-button {
+        margin: 12px;
+        padding: 10px 15px;
+        background: #333;
+        font-size: 1cap;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        position: static;
+        width: 100%;
+    }
+    .settings, .profile {
+        margin: 10px;
+        padding: 15px;
+}
+
+    .settings button, .settings .btn-exit {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .profile-info p, .profile-info ul li {
+        font-size: 14px;
+    }
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    button.btn-primary {
+        font-size: 14px;
+    }
+
+    a.link-secondary {
+        font-size: 12px;
     }
 }
 
@@ -503,4 +502,165 @@ nav {
     color: red;
     cursor: pointer;
     font-size: 14px;
+}
+
+
+
+.container-book-list {
+    max-width: 75%;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.container-slice {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -2.5%;
+}
+.title {
+    margin: 12px;
+    text-align: left;
+    color: #333;
+}
+.book-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+.book-item p {
+    margin: 1px;
+    color: gray;
+}
+.book-item {
+    margin-top: 24px;
+    display: flex;
+    padding: 10px;
+    border: 1px;
+    background-color: #333;
+    margin: 12px;
+    border-radius: 12px;
+    justify-content: space-between;
+}
+.book-link {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+.book-link:hover {
+    text-decoration: underline;
+}
+.create-book {
+    text-align: left;
+    margin-top: 40px;
+    justify-content: center;
+}
+.create-button {
+    margin: 12px;
+    padding: 10px 15px;
+    background: #333;
+    font-size: 1.5cap;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.create-button:hover {
+    background: #333333;
+}
+
+.book-list-slice {
+    margin: 1px;
+}
+
+
+
+
+
+.book-container {
+    width: 95%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.book-title-slice {
+    display: flex;
+}
+
+.book-title {
+    text-align: center;
+    color: #2c3e50;
+}
+
+.book-author, .book-content, .book-tags {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.book-chapters {
+    background: #ecf0f1;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.chapter-link {
+    color: #1f1f1f;
+    text-decoration: none;
+}
+
+.chapter-link:hover {
+    text-decoration: underline;
+}
+
+.vote-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.vote-form button {
+    background: #333;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.vote-form button:hover {
+    background: #1f1f1f;
+}
+
+.rating {
+    font-weight: bold;
+}
+
+.book-comments, .add-comment, .repost-book, .add-chapter {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ecf0f1;
+    border-radius: 5px;
+}
+
+.comment-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1f1f1f;
 }

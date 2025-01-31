@@ -1,78 +1,95 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if request.user.is_authenticated and request.user != book.author %}
-    <form method="post" action="{% url 'vote' obj_type='book' obj_id=book.id %}">
-      {% csrf_token %}
-      <button type="submit" name="value" value="1">⬆</button>
-      <span>{{ book.rates }}</span>
-      <button type="submit" name="value" value="-1">⬇</button>
-    </form>
-  {% else %}
-    <span>{{ book.rates }}</span>
-  {% endif %}
-  <h1>{{ book.title }}</h1>
-  <p><strong>Author:</strong> {{ book.author.username }}</p>
-  <p><strong>Content:</strong> {{ book.content }}</p>
-  <p><strong>Tags:</strong> {{ book.tags }}</p>
-
-  <h3>Chapters</h3>
-  <ul>
-    {% for chapter in book.chapters.all %}
-      <li><a href="{{ chapter.id }}">{{ chapter.title }}</a></li>
-    {% endfor %}
-  </ul>
-
-  {% if user == book.author %}
-    <h4>Add a Chapter</h4>
-    <form method="post" action="{% url 'chapter_create' book.id %}">
-      {% csrf_token %}
-      {{ chapter_form.as_p }}
-      <button type="submit">Add Chapter</button>
-    </form>
-  {% endif %}
-
-
-  <h3>Comments</h3>
-  <ul>
-    {% for comment in book.comments.all %}
-      <li>
-        <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
-        <form method="post" action="{% url 'vote' obj_type='comment' obj_id=comment.id %}">
-            {% csrf_token %}
-            {% if request.user.is_authenticated and request.user != comment.author %}
-                <button type="submit" name="value" value="1">⬆</button>
-                <span>{{ comment.rates }}</span>
-                <button type="submit" name="value" value="-1">⬇</button>
-            {% else %}
-                <span>{{ comment.rates }}</span>
-            {% endif %}
+  <div class="book-container">
+    <div class="book-title-slice">
+      {% if request.user.is_authenticated and request.user != book.author %}
+        <form method="post" action="{% url 'vote' obj_type='book' obj_id=book.id %}" class="vote-form">
+          {% csrf_token %}
+          <button type="submit" name="value" value="1">⬆</button>
+          <span class="rating">{{ book.rates }}</span>
+          <button type="submit" name="value" value="-1">⬇</button>
         </form>
-      </li>
-    {% endfor %}
-  </ul>
-  <h3>Repost Book</h3>
-  <form method="post" action="{% url 'repost_book' book.id %}">
-      {% csrf_token %}
-      <label for="channel">Select Channel:</label>
-      <select name="channel_id">
-        {% for channel in owned_channels %}
-            <option value="{{ channel.id }}">{{ channel.name }}</option>
-        {% endfor %}
-        {% for channel in admin_channels %}
-            <option value="{{ channel.id }}">{{ channel.name }}</option>
-        {% endfor %}
-      </select>
-      <label for="comment">Comment:</label>
-      <textarea name="comment" id="comment"></textarea>
-      <button type="submit">Repost</button>
-  </form>
+      {% else %}
+        <span class="rating">{{ book.rates }}</span>
+      {% endif %}
+      
+      <h1 class="book-title">{{ book.title }}</h1>
+    </div>
+    <p class="book-author"><strong>Author:</strong> {{ book.author.username }}</p>
+    <p class="book-content"><strong>Description:</strong> {{ book.content }}</p>
+    <p class="book-tags"><strong>Tags:</strong> {{ book.tags }}</p>
 
+    <div class="book-chapters">
+      <h3>Chapters</h3>
+      <ul>
+        {% for chapter in book.chapters.all %}
+          <li><a href="{{ chapter.id }}" class="chapter-link">{{ chapter.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
 
-  <h4>Add a Comment</h4>
-  <form method="post" action="{% url 'book_comment_create' book.id %}">
-    {% csrf_token %}
-    {{ comment_form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+    {% if user == book.author %}
+      <div class="add-chapter">
+        <h4>Add a Chapter</h4>
+        <form method="post" action="{% url 'chapter_create' book.id %}">
+          {% csrf_token %}
+          {{ chapter_form.as_p }}
+          <button type="submit">Add Chapter</button>
+        </form>
+      </div>
+    {% endif %}
+    {% if owned_channels or admin_channels %}
+      <div class="repost-book">
+        <h3>Repost Book</h3>
+        <form method="post" action="{% url 'repost_book' book.id %}">
+            {% csrf_token %}
+            <label for="channel">Select Channel:</label>
+            <select name="channel_id">
+              {% for channel in owned_channels %}
+                  <option value="{{ channel.id }}">{{ channel.name }}</option>
+              {% endfor %}
+              {% for channel in admin_channels %}
+                  <option value="{{ channel.id }}">{{ channel.name }}</option>
+              {% endfor %}
+            </select>
+            <label for="comment">Comment:</label>
+            <textarea name="comment" id="comment"></textarea>
+            <button type="submit">Repost</button>
+        </form>
+      </div>
+    {% endif %}
+
+    <div class="add-comment">
+      <h4>Add a Comment</h4>
+      <form method="post" action="{% url 'book_comment_create' book.id %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="book-comments">
+      <h3>Comments</h3>
+      <ul>
+        {% for comment in book.comments.all %}
+          <li class="comment-item">
+            <div class="book-title-slice">
+              <form method="post" action="{% url 'vote' obj_type='comment' obj_id=comment.id %}" class="vote-form">
+                  {% csrf_token %}
+                  {% if request.user.is_authenticated and request.user != comment.author %}
+                      <button type="submit" name="value" value="1">⬆</button>
+                      <span class="rating">{{ comment.rates }}</span>
+                      <button type="submit" name="value" value="-1">⬇</button>
+                  {% else %}
+                      <span class="rating">{{ comment.rates }}</span>
+                  {% endif %}
+              </form>
+              <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 {% endblock %}

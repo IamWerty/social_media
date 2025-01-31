@@ -1,11 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Books</h1>
-  <ul>
-    {% for book in books %}
-      <li><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'book_create' %}">Create a new book</a>
+  <div class="container-book-list">
+    <h1 class="title">Books</h1>
+    <div class="container-slice">
+      <div class="create-book">
+        <a href="{% url 'book_create' %}" class="create-button">New book</a>
+      </div>
+      <div class="search-bar">
+        <form method="GET">
+          <input type="text" name="q" placeholder="Search by tags, description, or author" value="{{ request.GET.q }}">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+    <div class="book-list">
+      <ul>
+        {% for book in books %}
+          <li class="book-item">
+            <div class="book-list-slice">
+              <a href="{{ book.get_absolute_url }}" class="book-link">{{ book.title }}</a>
+              <p>{{ book.content|slice:":25" }}
+                {% if book.content|length > 25 %}...{% endif %}
+              </p>
+            </div>
+            {{ book.author }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 {% endblock %}

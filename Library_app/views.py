@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views import View
 from django.contrib import messages
+from django.db.models import Q
 from django.views.generic import ListView, CreateView, DetailView
 from django.urls import reverse, reverse_lazy
 from .models import Book, BookComment, Chapter, ChapterComment, Channel, Post, Repost, CustomUser, BookVote, ChapterVote, BookCommentVote
@@ -10,6 +11,16 @@ class BookListView(ListView):
     model = Book
     template_name = 'Library_app/book_list.html'
     context_object_name = 'books'
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        if query:
+            return Book.objects.filter(
+                Q(tags__icontains=query) | 
+                Q(content__icontains=query) | 
+                Q(author__username__icontains=query)
+            ).distinct()
+        return Book.objects.all().order_by('-rates')
 
 class BookCreateView(CreateView):
     model = Book
