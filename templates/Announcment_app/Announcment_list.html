@@ -2,29 +2,36 @@
 
 {% block content %}
     <div class="ann-container">
-        <h1>Announcments</h1>
+        <h1>Announcements</h1>
 
         {% if user.is_superuser %}
-            <a href="{% url 'Announcment_create' %}" class="btn btn-primary">Create New Advertisement</a>
+            <div class="ann-actions">
+                <a href="{% url 'Announcment_create' %}" class="btn btn-primary">Create New Advertisement</a>
+            </div>
         {% endif %}
 
-        <ul>
-            {% for ann in anns %}
-                <li>
-                    <h3>{{ ann.title }}</h3>
-                    <p>{{ ann.content|slice:":25" }}
-                        {% if ann.content|length > 25 %}...{% endif %}
-                    </p>
-                    <small>{{ ann.created_at }}</small>
-                    <br>
-                    <a href="{% url 'Announcment_detail' ann.id %}">View Details</a>
+        <div class="ann-list">
+            <ul>
+                {% for ann in anns %}
+                    <li class="ann-item">
+                        <div class="ann-content">
+                            <h3>{{ ann.title }}</h3>
+                            <p>{{ ann.content|slice:":25" }}
+                                {% if ann.content|length > 25 %}...{% endif %}
+                            </p>
+                            <small>{{ ann.created_at }}</small>
+                        </div>
+                        <div class="ann-links">
+                            <a href="{% url 'Announcment_detail' ann.id %}" class="btn btn-info">View Details</a>
 
-                    {% if user.is_superuser %}
-                        <a href="{% url 'Announcment_update' ann.id %}" class="btn btn-secondary">Edit</a>
-                        <a href="{% url 'Announcment_delete' ann.id %}" class="btn btn-danger">Delete</a>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+                            {% if user.is_superuser %}
+                                <a href="{% url 'Announcment_update' ann.id %}" class="btn btn-secondary">Edit</a>
+                                <a href="{% url 'Announcment_delete' ann.id %}" class="btn btn-danger">Delete</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock %}

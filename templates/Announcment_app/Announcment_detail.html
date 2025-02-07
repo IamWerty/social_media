@@ -2,15 +2,19 @@
 
 {% block content %}
     <div class="detail-container">
-        <h1>{{ ann.title }}</h1>
-        <p>{{ ann.content }}</p>
-        <small>Created at: {{ ann.created_at }}</small>
-        <br>
-        <a href="{% url 'Announcment_list' %}" class="btn btn-secondary">Back to List</a>
-
-        {% if user.is_superuser %}
-            <a href="{% url 'Announcment_update' ann.id %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'Announcment_delete' ann.id %}" class="btn btn-danger">Delete</a>
-        {% endif %}
+        <div class="detail-header">
+            <h1>{{ ann.title }}</h1>
+        </div>
+        <div class="detail-body">
+            <p>{{ ann.content }}</p>
+            <small>Created at: {{ ann.created_at }}</small>
+        </div>
+        <div class="detail-actions">
+            <a href="{% url 'Announcment_list' %}" class="btn btn-secondary">Back to List</a>
+            {% if user.is_superuser %}
+                <a href="{% url 'Announcment_update' ann.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'Announcment_delete' ann.id %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

@@ -105,10 +105,20 @@ class ChapterCommentCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('chapter_detail', kwargs={'book_id': self.object.chapter.book.id, 'pk': self.object.chapter.id})
 
+
 class ChannelListView(ListView):
     model = Channel
     template_name = 'Library_app/channel_list.html'
     context_object_name = 'channels'
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        if query:
+            return Channel.objects.filter(
+                Q(posts__content__icontains=query) |  # Пошук за текстом постів
+                Q(owner__username__icontains=query)  # Пошук за ім’ям власника
+            ).distinct()
+        return Channel.objects.all().order_by('name')
 
 class ChannelCreateView(CreateView):
     model = Channel
