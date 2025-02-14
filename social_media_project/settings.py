@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Library_app',
     'announcments_app',
     'chat_app',
+    'main_page'
 ]
 
 MIDDLEWARE = [

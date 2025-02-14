@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="channels-container">
+    <u><h2>Головна сторінка письменника</h2></u>
+
+    <section>
+        <h3>Останні пости в підписаних каналах</h3>
+        {% if latest_posts %}
+            <ul>
+                {% for post in latest_posts %}
+                    <li>
+                        <strong>{{ post.author.username }}</strong> в <a href="{{ post.channel.get_absolute_url }}">{{ post.channel.name }}</a>:<br>
+                        {{ post.content|truncatewords:30 }}
+                        <br><small>{{ post.created_at|date:"d.m.Y H:i" }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Немає нових постів.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h3>Топ-3 книги</h3>
+        {% if top_books %}
+            <div class="book-list">
+                <ul>
+                    {% for book in top_books %}
+                        <li class="book-item">
+                            <div class="book-list-slice">
+                                <a href="{{ book.get_absolute_url }}" class="book-link"><strong>{{ book.title }}</strong></a> 
+                                <br>Рейтинг: {{ book.rates }}
+                            </div>
+                            <br>Автор: {{ book.author.username }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>Немає популярних книг.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h3>Топ-3 популярних спільнот</h3>
+        {% if top_communities %}
+            <div class="channels-list">
+                <ul>
+                    {% for community in top_communities %}
+                        <li class="channel-item">
+                            <a href="{{ community.get_absolute_url }}" class="channel-link">{{ community.name }}</a> 
+                            <br>Учасників: {{ community.member_count }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>Немає популярних спільнот.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <div class="container-book-list">
+            <h3>Останнє оголошення</h3>
+            {% if last_announcement %}
+                <p><strong>{{ last_announcement.title }}</strong></p>
+                <p>{{ last_announcement.content|safe }}</p>
+                <small>Опубліковано: {{ last_announcement.date_created|date:"d.m.Y H:i" }}</small>
+            {% else %}
+                <p>Оголошень поки що немає.</p>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}

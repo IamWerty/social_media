@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include("Library_app.urls")),
     path('', include("announcments_app.urls")),
     path('', include("chat_app.urls")),
+    path('', include("main_page.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
