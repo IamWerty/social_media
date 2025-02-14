@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)%y#5=nh8xb#(793t8$)!0xm2m#pa^by#erak0@&0pfc578i(=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "social-media-boxy.onrender.com"]
 
 
 # Application definition
