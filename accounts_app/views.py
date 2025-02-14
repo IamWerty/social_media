@@ -20,7 +20,7 @@ class UserRegisterView(RedirectAuthenticatedUserMixin, View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('profile')
+            return redirect('login')
         return render(request, 'accounts_app/register.html', {'form': form})
 
 class UserLoginView(RedirectAuthenticatedUserMixin, LoginView):
