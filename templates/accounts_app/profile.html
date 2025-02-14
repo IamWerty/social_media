@@ -14,21 +14,19 @@
                 <p>Followers: {{ user.followers.count }}</p>
                 <p>Friends: {{ user.friends.count }}</p>
 
-                <h3>Прочитані книги</h3>
+                <h3>Підписані канали</h3>
                 <ul>
-                    {% for book in user.read_books.all %}
-                        <li>{{ book.title }}</li>
-                    {% empty %}
-                        <li>Книги відсутні.</li>
+                    {% for channel in user.channels.all %}
+                        <li>
+                            <a href="{% url 'channel_detail' channel.id %}">{{ channel.name }}</a>
+                        </li>
                     {% endfor %}
                 </ul>
 
-                <h3>Підписані канали</h3>
+                <h3>Прочитані книги</h3>
                 <ul>
-                    {% for channel in user.subscribed_channels.all %}
-                        <li>{{ channel.name }}</li>
-                    {% empty %}
-                        <li>Канали відсутні.</li>
+                    {% for book in user.read_works.all %}
+                        <li><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></li>
                     {% endfor %}
                 </ul>
                 {% if request.user.is_authenticated and request.user.id != user.id %}

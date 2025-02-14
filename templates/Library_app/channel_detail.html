@@ -27,6 +27,19 @@
       <li>{{ member.username }}</li>
     {% endfor %}
   </ul>
+  
+  {% if request.user in channel.members.all %}
+    <form method="post" action="{% url 'leave_channel' channel.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Leave Channel</button>
+    </form>
+  {% else %}
+    <form method="post" action="{% url 'subscribe_channel' channel.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success">Subscribe</button>
+    </form>
+  {% endif %}
+
   <h3>Posts</h3>
   <ul>
     {% for post in posts %}
@@ -44,8 +57,10 @@
         </li>
     {% endfor %}
   </ul>
-  <form method="post" action="{% url 'post_create' channel.id %}">{% csrf_token %}
-    <textarea name="content"></textarea>
-    <button type="submit">Post</button>
-  </form>
+  {% if request.user in channel.admins.all or request.user == channel.owner %}
+    <form method="post" action="{% url 'post_create' channel.id %}">{% csrf_token %}
+      <textarea name="content"></textarea>
+      <button type="submit">Post</button>
+    </form>
+  {% endif %}
 {% endblock %}

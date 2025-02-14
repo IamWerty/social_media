@@ -61,6 +61,20 @@ class BookCommentCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('book_detail', kwargs={'pk': self.kwargs['pk']})
 
+class MarkAsReadView(View):
+    def post(self, request, book_id):
+        book = get_object_or_404(Book, id=book_id)
+        user = request.user
+
+        if book in user.read_works.all():
+            user.read_works.remove(book)
+            messages.info(request, "Книгу видалено з прочитаних.")
+        else:
+            user.read_works.add(book)
+            messages.success(request, "Книга додана до прочитаних!")
+
+        return redirect('book_detail', pk=book.id)
+
 class ChapterCreateView(CreateView):
     model = Chapter
     fields = ['title','content', 'note']
@@ -144,8 +158,32 @@ class ChannelDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['all_users'] = CustomUser.objects.all()
         context['posts'] = self.object.posts.all().order_by('-id')
+        context['is_admin'] = self.request.user == self.object.owner or self.request.user in self.object.admins.all()
+        context['is_member'] = self.request.user in self.object.members.all()
         return context
 
+class SubscribeToChannelView(View):
+    def post(self, request, pk):
+        channel = get_object_or_404(Channel, pk=pk)
+        if request.user not in channel.members.all():
+            request.user.channels.add(channel)
+            channel.members.add(request.user)
+            messages.success(request, 'You have subscribed to the channel.')
+        else:
+            messages.info(request, 'You are already a member of this channel.')
+        return redirect('channel_detail', pk=pk)
+    
+class LeaveTheChannelView(View):
+    def post(self, request, pk):
+        channel = get_object_or_404(Channel, pk=pk)
+        if request.user in channel.members.all():
+            request.user.channels.remove(channel)
+            channel.members.remove(request.user)
+            messages.success(request, 'You have leave to the channel.')
+        else:
+            messages.info(request, 'You are already left of this channel.')
+        return redirect('channel_detail', pk=pk)
+    
 class ManageAdminView(View):
     def post(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
@@ -214,8 +252,13 @@ class PostCreateView(CreateView):
     template_name = 'Library_app/post_form.html'
 
     def form_valid(self, form):
+        channel = get_object_or_404(Channel, pk=self.kwargs['pk'])
+        if self.request.user != channel.owner and self.request.user not in channel.admins.all():
+            messages.error(self.request, 'Only admins and the owner can post in this channel.')
+            return redirect('channel_detail', pk=self.kwargs['pk'])
+
         form.instance.author = self.request.user
-        form.instance.channel = get_object_or_404(Channel, pk=self.kwargs['pk'])
+        form.instance.channel = channel
         return super().form_valid(form)
 
     def get_success_url(self):

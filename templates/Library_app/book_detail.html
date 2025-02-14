@@ -45,6 +45,18 @@
         </form>
       </div>
     {% endif %}
+    {% if request.user.is_authenticated %}
+      <form method="post" action="{% url 'mark_as_read' book.id %}">
+        {% csrf_token %}
+        <button type="submit">
+          {% if book in request.user.read_works.all %}
+            Прочитано
+          {% else %}
+            Позначити як прочитано
+          {% endif %}
+        </button>
+      </form>
+    {% endif %}
     {% if owned_channels or admin_channels %}
       <div class="repost-book">
         <h3>Repost Book</h3>

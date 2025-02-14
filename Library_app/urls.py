@@ -6,6 +6,7 @@ urlpatterns = [
     path('books/create/', views.BookCreateView.as_view(), name='book_create'),
     path('books/<int:pk>/', views.BookDetailView.as_view(), name='book_detail'),
     path('books/<int:pk>/comments/', views.BookCommentCreateView.as_view(), name='book_comment_create'),
+    path('book/<int:book_id>/read/', views.MarkAsReadView.as_view(), name='mark_as_read'),
 
     path('books/<int:book_id>/chapters/create/', views.ChapterCreateView.as_view(), name='chapter_create'),
     path('books/<int:book_id>/<int:pk>/comments/', views.ChapterCommentCreateView.as_view(), name='chapter_comment_create'),
@@ -18,6 +19,8 @@ urlpatterns = [
     path('channels/<int:pk>/manage_admin/', views.ManageAdminView.as_view(), name='manage_admin'),
     path('channels/<int:pk>/posts/create/', views.PostCreateView.as_view(), name='post_create'),
     path('channels/<int:pk>/repost/', views.RepostCreateView.as_view(), name='repost_create'),
+    path('channels/<int:pk>/subscribe/', views.SubscribeToChannelView.as_view(), name='subscribe_channel'),
+    path('channels/<int:pk>/leave/', views.LeaveTheChannelView.as_view(), name='leave_channel'),
 
     path('vote/<str:obj_type>/<int:obj_id>/', views.VoteView.as_view(), name='vote'),
 
