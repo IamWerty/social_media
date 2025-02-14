@@ -1,0 +1,844 @@
+body {
+    font-family: 'Georgia', serif;
+    background-color: #f7f3eb;
+    margin: 0;
+    padding: 0;
+    color: #6b4f4f;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.875rem;
+}
+
+p {
+    color: #6b4f4f;
+}
+
+.container {
+    background: #f7f3eb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 25%;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.container h2 {
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-login, .form-register {
+    gap: 15px;
+}
+
+input[type="text"], input[type="password"], input[type="email"], select, textarea {
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+    background-color: #f7f3eb;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button.btn-primary {
+    padding: 10px 15px;
+    background-color: #333;
+    color: #f3f3f3ea;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-primary:hover {
+    background-color: #1f1f1f;
+}
+
+a.link-secondary {
+    display: block;
+    margin-top: 15px;
+    color: #555555;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+a.link-secondary:hover {
+    color: #1f1f1f;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.settings {
+    max-width: 600px;
+    margin: 20px;
+    background: #f7f3eb;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 25%;
+    border: #ddd 1px solid;
+}
+
+.settings h2 {
+    margin-bottom: 20px;
+}
+
+.settings form {
+    margin-bottom: 20px;
+}
+
+.settings label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.settings input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.settings button {
+    display: block;
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.settings button:hover {
+    background-color: #0056b3;
+}
+
+.settings .btn-exit {
+    background-color: #dc3545;
+}
+
+.settings .btn-exit:hover {
+    background-color: #a71d2a;
+}
+
+/* Стилі для профілю (profile.html) */
+.profile {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+    margin-top: 20px;
+}
+
+.profile h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-info h3 {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.profile-info p {
+    font-size: 16px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.profile-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile-info ul li {
+    background: #f8f8f8;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Стилі для повідомлення про приватний профіль */
+.profile p {
+    font-size: 18px;
+    color: #333;
+    background-color: #f3f3f3;
+    border: 1px solid #f3f3f3ea;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 600px;
+    margin: 20px;
+}
+.PrivateProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    gap: 20px;
+}
+
+.PrivateProfile p {
+    font-size: 2rem;
+    text-decoration: underline;
+    color: #721c24;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    position: relative;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 15px;
+    display: block;
+    transition: background 0.3s;
+    font-size: 1.125rem;
+}
+
+.nav-menu a:hover {
+    background-color: #555;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.dropdown-menu li {
+    border-bottom: 1px solid #555;
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a form{
+    padding: 10px 15px;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.dropdown-menu a:hover form:hover {
+    background-color: #555;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.messages {
+    list-style-type: none;
+    margin: 20px;
+    padding: 0;
+    max-width: 600px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.messages li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    color: #333;
+}
+
+.messages li:last-child {
+    border-bottom: none;
+}
+
+.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.messages li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+@media (max-width: 768px) {
+    .messages {
+        margin: 10px;
+        max-width: 100%;
+    }
+    .create-button {
+        margin: 12px;
+        padding: 10px 15px;
+        background: #333;
+        font-size: 1cap;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        position: static;
+        width: 100%;
+    }
+    .settings, .profile {
+        margin: 10px;
+        padding: 15px;
+}
+
+    .settings button, .settings .btn-exit {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .profile-info p, .profile-info ul li {
+        font-size: 14px;
+    }
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    button.btn-primary {
+        font-size: 14px;
+    }
+
+    a.link-secondary {
+        font-size: 12px;
+    }
+}
+
+.chat-list {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+.chat-list a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #eee;
+}
+.chat-list a:hover {
+    background-color: #f0f0f0;
+}
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.messages {
+    flex: 1;
+    max-height: 25%;
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+}
+.message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+.message.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+}
+.message.received {
+    background-color: #fff;
+    align-self: flex-start;
+    border: 1px solid #ccc;
+}
+.message-form {
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+}
+.message-form textarea {
+    flex: 1;
+    resize: none;
+    padding: 10px;
+}
+.message-form button {
+    margin-left: 10px;
+    padding: 10px;
+}
+
+.chat-body {
+    display: flex;
+}
+.message-actions {
+    position: relative;
+    display: inline-block;
+}
+
+.actions-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+}
+
+.actions-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.actions-button:focus + .actions-menu,
+.actions-menu:hover {
+    display: block;
+}
+
+.actions-menu form {
+    margin: 0;
+    padding: 5px;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+
+.container-book-list, .channels-container {
+    max-width: 75%;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.container-slice {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -2.5%;
+}
+.title, .channels-title {
+    margin: 12px;
+    text-align: left;
+    color: #333;
+    word-break: break-all;
+}
+.book-list, .book-chapters, .channels-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+.book-item p {
+    margin: 1px;
+    color: gray;
+}
+.book-item, .book-item-chapter, .channel-item {
+    display: flex;
+    padding: 10px;
+    border: 1px;
+    background-color: #333;
+    margin: 12px;
+    border-radius: 12px;
+    justify-content: space-between;
+    list-style-type: none;
+}
+.book-link, .chapter-link, .channel-link {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+.book-link:hover, .chapter-link:hover, .channel-item:hover, .channel-link:hover {
+    text-decoration: underline;
+}
+.create-book {
+    text-align: left;
+    margin-top: 40px;
+    justify-content: center;
+}
+.create-button, .create-channel-button, .create-channel-button:hover {
+    margin: 12px;
+    padding: 10px 15px;
+    background: #333;
+    font-size: 1.5cap;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.create-button:hover {
+    background: #333333;
+}
+
+.book-list-slice {
+    margin: 1px;
+}
+
+.book-container {
+    width: 95%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.book-title-slice {
+    display: flex;
+    align-items: center;
+    margin: 12px;
+}
+
+.book-title, .comment-content{
+    text-align: center;
+    color: #2c3e50;
+    margin-left: 12px;
+}
+
+.book-author, .book-content, .book-tags {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.book-chapters {
+    background: #ecf0f1;
+    border-radius: 5px;
+    padding: 5pxq;
+}
+
+.vote-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.vote-form button {
+    background: #333;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.vote-form button:hover {
+    background: #1f1f1f;
+}
+
+.rating {
+    font-weight: bold;
+}
+
+.book-comments, .add-comment, .repost-book, .add-chapter {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ecf0f1;
+    border-radius: 5px;
+}
+
+.comment-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1f1f1f;
+}
+
+.back-to-book {
+    padding: 10px;
+    border: 1px;
+    background-color: #333;
+    margin: 12px;
+    border-radius: 12px;
+    max-width: 12%;
+}
+.back-to-book a {
+    color: white;
+    text-decoration: none;
+}
+.create-channel {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+}
+
+
+
+
+
+
+
+.chapter-container {
+    max-width: 80%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Стилі для блоку перепоста */
+.repost-info {
+    background: #eef;
+    padding: 10px;
+    border-left: 5px solid #88c;
+    margin-bottom: 15px;
+}
+
+/* Стилі для коментарів */
+.comment-container {
+    margin-top: 20px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.comments {
+    list-style: none;
+    padding: 0;
+}
+
+.comment-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+/* Стилі для форми додавання коментаря */
+.comment-form-container {
+    margin-top: 20px;
+    background: #eef;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    height: 80px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.comment-form button {
+    background: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background: #333333;
+}
+
+.chapter-content {
+    margin-bottom: 20px;
+    word-break: break-all;
+}
+
+.chapter-note {
+    font-style: italic;
+    padding: 10px;
+    background: #f4f4f4;
+    border-left: 4px solid #88c;
+    margin-bottom: 20px;
+}
+
+.repost-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: #eef;
+    border-radius: 8px;
+}
+
+.chapter-title {
+    margin: 12px;
+    margin-top: -12px;
+    font-size: 2cap;
+    word-break: break-all;
+}
+
+.ann-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ann-actions {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.ann-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ann-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ann-content h3 {
+    margin: 0 0 5px;
+}
+
+.ann-links {
+    margin-top: 10px;
+}
+
+.ann-links .btn {
+    margin-right: 5px;
+}
+.detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.detail-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.detail-body {
+    padding: 15px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detail-actions {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.detail-actions .btn {
+    margin: 5px;
+}
